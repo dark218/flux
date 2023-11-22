@@ -1,0 +1,159 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:amp="http://soprabanking.com/amplitude">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <amp:createTransferRequestFlow>
+         <amp:requestHeader>
+            <amp:requestId>1</amp:requestId>
+            <amp:serviceName>createTransfer</amp:serviceName>
+            <amp:timestamp>${=(new Date().format("yyyy-MM-dd'T'hh:mm:ss"))}</amp:timestamp>
+            <amp:userCode>AO0095VC</amp:userCode>
+         </amp:requestHeader>
+         <amp:createTransferRequest>
+            <amp:canal>NEXTGEN</amp:canal>
+            <amp:pain001><![CDATA[<?xml version='1.0' encoding='UTF-8'?>
+
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03DB">
+    <CstmrCdtTrfInitn>
+        <GrpHdr>
+            <MsgId>PERM0006</MsgId>
+            <CreDtTm>${=(new Date().format("yyyy-MM-dd'T'hh:mm:ss"))}</CreDtTm>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>45000</CtrlSum>
+            <InitgPty/>
+            <DltPrvtData>
+                <FlwInd>HOMOLOGATION</FlwInd>
+                <DltPrvtDataDtl>
+                    <PrvtDtInf>NEXTGEN</PrvtDtInf>
+                    <Tp>
+                        <CdOrPrtry>
+                            <Cd>CHANNEL</Cd>
+                        </CdOrPrtry>
+                    </Tp>
+                </DltPrvtDataDtl>
+            </DltPrvtData>
+        </GrpHdr>
+        <PmtInf>
+            <PmtInfId>PERM0006</PmtInfId>
+            <PmtMtd>TRF</PmtMtd>
+            <BtchBookg>false</BtchBookg>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>45000</CtrlSum>
+			
+			<DltPrvtData>
+				<OrdrPrties>
+				  <Tp>STO</Tp>
+				  <Md>CANCEL</Md>  <!-- CREATE/MODIFY/CANCEL LOT -->
+				  
+				   <!-- Original LOT -->
+                    <ChngInf>
+                        <ChngId>Test_Youssef</ChngId>
+                        <OrgnlOrdrRef>
+                            <AmplLotId>SSGGNGN23010600280479</AmplLotId>
+                        </OrgnlOrdrRef>
+                    </ChngInf>
+				  <StdgOrdrInf>
+					<Frqcy>MNTH</Frqcy>
+					<NbOfInstlments>3</NbOfInstlments>
+					<FrstInstlmentDt>2022-03-09</FrstInstlmentDt>
+					<LstInstlmentDt>2022-05-09</LstInstlmentDt>
+				  </StdgOrdrInf>
+				</OrdrPrties>
+			 </DltPrvtData>
+			
+            <PmtTpInf>
+                <InstrPrty>NORM</InstrPrty>
+                <SvcLvl>
+                    <Prtry>INTERNAL</Prtry>
+                </SvcLvl>
+            </PmtTpInf>
+            <ReqdExctnDt>2022-03-08</ReqdExctnDt>
+            <Dbtr>
+                <Nm>NOM DONNEUR D'ORDRE</Nm>
+            </Dbtr>
+            <DbtrAcct>
+                <Id>
+                    <Othr>
+                        <Id>10000597303</Id>
+                        <SchmeNm>
+                            <Prtry>BKCOM_ACCOUNT</Prtry>
+                        </SchmeNm>
+                    </Othr>
+                </Id>
+                <Ccy>GNF</Ccy>
+            </DbtrAcct>
+            <DbtrAgt>
+                <FinInstnId>
+                    <Nm>BANQUE SGG</Nm>
+                    <Othr>
+                        <Id>00003</Id>
+                        <SchmeNm>
+                            <Prtry>ITF_DELTAMOP_IDETAB</Prtry>
+                        </SchmeNm>
+                    </Othr>
+                </FinInstnId>
+                <BrnchId>
+                    <Id>00001</Id>
+                    <Nm>AGENCE CITE CHEMIN DE FER</Nm>
+                </BrnchId>
+            </DbtrAgt>
+            <ChrgBr>SHAR</ChrgBr>
+            <CdtTrfTxInf>
+                <PmtId>
+                    <InstrId>121234</InstrId>
+                    <EndToEndId>121234</EndToEndId>
+                </PmtId>
+				
+				<!-- Original TX -->
+                <DltPrvtData>
+                    <ChngInf>
+                        <OrgnlOrdrRef>
+                            <AmplTxId>TSGGNGN23010600286457</AmplTxId>
+                        </OrgnlOrdrRef>
+                        <RsnInf>
+                            <Rsn>Modif </Rsn>
+                        </RsnInf>
+                    </ChngInf>
+                </DltPrvtData>
+                <Amt>
+                    <InstdAmt Ccy="GNF">45000</InstdAmt>
+                </Amt>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <Nm>BANQUE SGG</Nm>
+                        <Othr>
+                            <Id>00003</Id>
+                            <SchmeNm>
+                                <Prtry>ITF_DELTAMOP_IDETAB</Prtry>
+                            </SchmeNm>
+                        </Othr>
+                    </FinInstnId>
+                    <BrnchId>
+                        <Id>00021</Id>
+                        <Nm>AGENCE KAMSAR</Nm>
+                    </BrnchId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>NOM DU BENEFICIAIRE</Nm>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <Othr>
+                            <Id>003021000042279437</Id>
+                            <SchmeNm>
+                                <Prtry>BBAN</Prtry>
+                            </SchmeNm>
+                        </Othr>
+                    </Id>
+                    <Ccy>GNF</Ccy>
+                </CdtrAcct>
+                <RmtInf>
+                    <Ustrd>Virement Dom NEXTGEN</Ustrd>
+                </RmtInf>
+            </CdtTrfTxInf>
+        </PmtInf>
+    </CstmrCdtTrfInitn>
+</Document>]]></amp:pain001>
+         </amp:createTransferRequest>
+      </amp:createTransferRequestFlow>
+   </soapenv:Body>
+</soapenv:Envelope>
