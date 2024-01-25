@@ -1,0 +1,32 @@
+Sub RechercheOccurrences()
+    Dim ws1 As Worksheet, ws2 As Worksheet, wsOutput As Worksheet
+    Dim lastRow1 As Long, lastRow2 As Long, outputRow As Long
+    Dim i As Long, j As Long
+
+    ' Remplacez "Feuille1" et "Feuille2" par les noms réels de vos feuilles
+    Set ws1 = ThisWorkbook.Sheets("Feuille1")
+    Set ws2 = ThisWorkbook.Sheets("Feuille2")
+
+    ' Crée une nouvelle feuille pour les résultats
+    Set wsOutput = Sheets.Add(After:=Sheets(Sheets.Count))
+    wsOutput.Name = "Resultats"
+
+    ' Définir la dernière ligne avec des données dans les deux feuilles
+    lastRow1 = ws1.Cells(ws1.Rows.Count, "A").End(xlUp).Row
+    lastRow2 = ws2.Cells(ws2.Rows.Count, "A").End(xlUp).Row
+
+    ' Boucle à travers les programmes de la Feuille1
+    For i = 2 To lastRow1 ' Suppose que les données commencent à la ligne 2
+        ' Boucle à travers les programmes de la Feuille2
+        For j = 2 To lastRow2 ' Suppose que les données commencent à la ligne 2
+            ' Si le programme correspond
+            If ws1.Cells(i, 1).Value = ws2.Cells(j, 1).Value Then
+                ' Copier les données correspondantes dans la feuille de résultats
+                ws2.Rows(j).Copy wsOutput.Rows(outputRow)
+                outputRow = outputRow + 1
+            End If
+        Next j
+    Next i
+
+    MsgBox "Terminé! Les résultats ont été copiés dans la feuille 'Resultats'."
+End Sub
