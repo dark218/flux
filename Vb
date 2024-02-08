@@ -1,0 +1,57 @@
+Option Explicit
+
+Dim objFSO, objFolder, objFile, strFilePath, objTextFile, strText, strNewText
+
+' Chemin du répertoire contenant les fichiers
+strFilePath = "C:\Chemin\vers\le\repertoire"
+
+' Créer une instance de l'objet FileSystemObject
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+
+' Vérifier si le répertoire existe
+If objFSO.FolderExists(strFilePath) Then
+    ' Obtenir une référence au répertoire
+    Set objFolder = objFSO.GetFolder(strFilePath)
+    
+    ' Parcourir tous les fichiers dans le répertoire
+    For Each objFile In objFolder.Files
+        ' Vérifier si le fichier est un fichier texte
+        If LCase(objFSO.GetExtensionName(objFile.Path)) = "txt" Then
+            ' Lire le contenu du fichier
+            Set objTextFile = objFSO.OpenTextFile(objFile.Path, 1) ' 1 pour lecture
+            strText = objTextFile.ReadAll
+            objTextFile.Close
+            
+            ' Remplacer le caractère dans le texte
+            strNewText = ReplaceCharacter(strText)
+            
+            ' Écrire le nouveau texte dans le fichier
+            Set objTextFile = objFSO.OpenTextFile(objFile.Path, 2) ' 2 pour écriture
+            objTextFile.Write strNewText
+            objTextFile.Close
+        End If
+    Next
+    
+    MsgBox "Terminé !"
+Else
+    MsgBox "Le répertoire spécifié n'existe pas."
+End If
+
+' Fonction pour remplacer le caractère
+Function ReplaceCharacter(strText)
+    Dim arrLines, strLine
+    
+    ' Diviser le texte en lignes
+    arrLines = Split(strText, vbCrLf)
+    
+    ' Parcourir toutes les lignes
+    For Each strLine In arrLines
+        If Left(strLine, 5) = "57A: " And Len(strLine) > 8 Then
+            ' Remplacer le 8e caractère par zéro
+            Mid(strLine, 8, 1) = "0"
+        End If
+    Next
+    
+    ' Rejoindre les lignes en un seul texte
+    ReplaceCharacter = Join(arrLines, vbCrLf)
+End Function
