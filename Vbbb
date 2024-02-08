@@ -1,0 +1,52 @@
+Option Explicit
+
+Dim objFSO, objFolder, objFile, strFilePath
+
+' Chemin du répertoire contenant les fichiers
+strFilePath = "C:\Chemin\vers\le\repertoire"
+
+' Créer une instance de l'objet FileSystemObject
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+
+' Vérifier si le répertoire existe
+If objFSO.FolderExists(strFilePath) Then
+    ' Obtenir une référence au répertoire
+    Set objFolder = objFSO.GetFolder(strFilePath)
+    
+    ' Parcourir tous les fichiers dans le répertoire
+    For Each objFile In objFolder.Files
+        ' Vérifier si le fichier contient la chaîne "0101"
+        If ContientChaine(objFile.Path, "0101") Then
+            ' Supprimer le fichier
+            objFSO.DeleteFile objFile.Path, True ' True pour forcer la suppression
+            MsgBox "Fichier supprimé : " & objFile.Name
+        End If
+    Next
+    
+    MsgBox "Terminé !"
+Else
+    MsgBox "Le répertoire spécifié n'existe pas."
+End If
+
+' Fonction pour vérifier si un fichier contient une certaine chaîne
+Function ContientChaine(strFilePath, strChaine)
+    Dim objTextFile, strText
+    
+    On Error Resume Next ' Ignorer les erreurs si le fichier n'existe pas
+    ' Lire le contenu du fichier
+    Set objTextFile = objFSO.OpenTextFile(strFilePath)
+    If Err.Number = 0 Then ' Si aucune erreur
+        strText = objTextFile.ReadAll
+        objTextFile.Close
+        
+        ' Vérifier si le texte contient la chaîne spécifiée
+        If InStr(strText, strChaine) > 0 Then
+            ContientChaine = True
+        Else
+            ContientChaine = False
+        End If
+    Else
+        ContientChaine = False
+    End If
+    On Error GoTo 0 ' Réactiver les erreurs
+End Function
